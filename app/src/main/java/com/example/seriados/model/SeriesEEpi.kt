@@ -4,13 +4,13 @@ import androidx.room.Embedded
 import androidx.room.Relation
 
 class SeriesEEpi (
-    @Embedded val episodios: Episodios,
+    @Embedded val series: Series,
 
     @Relation(
         parentColumn = "id",
-        entityColumn = "episodioId"
+        entityColumn = "seriesId"
     )
-    val series: Series
+    val episodios: Episodios
 ) {
     override fun toString(): String = "Serie:" +
             "${series.nome}\t" +

@@ -7,9 +7,8 @@ import androidx.room.PrimaryKey
 class Series (
     val nome: String? = null,
     val categoria: String? = null,
-    val episodioId: Long? = null,
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null
 ){
-    override fun toString(): String = "$nome"
+    override fun toString(): String = " $id - $nome"
 }

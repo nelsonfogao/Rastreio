@@ -3,5 +3,5 @@ package com.example.seriados.database
 import com.example.seriados.model.Episodios
 
 object EpisodiosUtil {
-    var episodioSelecionado : Episodios? = null
+        var episodioSelecionado : Episodios? = null
 }

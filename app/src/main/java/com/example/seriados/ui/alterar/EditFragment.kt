@@ -1,4 +1,4 @@
-package com.example.seriados.ui.form
+package com.example.seriados.ui.alterar
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,30 +12,30 @@ import com.example.seriados.R
 import com.example.seriados.database.AppDatabase
 import com.example.seriados.database.EpisodiosUtil
 import com.example.seriados.database.SeriesUtil
-import com.example.seriados.model.Series
-import kotlinx.android.synthetic.main.fragment_form_series.*
-import kotlinx.android.synthetic.main.fragment_series.*
+import com.example.seriados.model.Episodios
+import kotlinx.android.synthetic.main.fragment_edit.*
 
-class FormSeriesFragment : Fragment() {
+class EditFragment : Fragment() {
 
-    private lateinit var viewModel: FormSeriesViewModel
+    private lateinit var viewModel: EpisodiosViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_form_series, container, false)
+        val view = inflater.inflate(R.layout.fragment_edit, container, false)
 
 
         val appDatabase =
             AppDatabase.getInstance(requireContext().applicationContext)              // DB
 
+        val episodiosDao = appDatabase.episodiosDao()
         val seriesDao = appDatabase.seriesDao()
-        val formSeriesViewModelFactory = FormSeriesViewModelFactory(seriesDao) //    // DB
+        val episodiosViewModelFactory = EpisodiosViewModelFactory(episodiosDao,seriesDao) //    // DB
 
         viewModel = ViewModelProvider(
-            this, formSeriesViewModelFactory
-        ).get(FormSeriesViewModel::class.java)   //
+            this, episodiosViewModelFactory
+        ).get(EpisodiosViewModel::class.java)   //
 
         viewModel.let {
             it.msg.observe(viewLifecycleOwner) { msg ->
@@ -55,32 +55,24 @@ class FormSeriesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (SeriesUtil.serieSelecionada != null)
-            preencherFormulario(SeriesUtil.serieSelecionada!!)
+        if (EpisodiosUtil.episodioSelecionado != null)
+            preencherFormulario(EpisodiosUtil.episodioSelecionado!!)
+
+        buttonSalvarEpisodio.setOnClickListener {
 
 
-        buttonAddEpi.setOnClickListener {
-            findNavController().navigate(R.id.editFragment)
-        }
-
-        fabSalvar.setOnClickListener {
-
-
-            val nome = editTextNome.text.toString()
-            val categoria = editTextCategoria.text.toString()
-
-            viewModel.salvarSeries(nome,categoria)
+            var numero = editTextEpisodioNumero.text.toString()
+            var serieId = editTextidserie.text.toString().toLong()
+            viewModel.salvarEpisodios(numero, serieId)
         }
     }
 
-    private fun preencherFormulario(series: Series){
-        editTextNome.setText(series.nome)
-        editTextCategoria.setText(series.categoria)
+    private fun preencherFormulario(episodios: Episodios){
+        editTextEpisodioNumero.setText(episodios.numero)
     }
 
     private fun limparFormulario() {
-        editTextNome.setText("")
-        editTextCategoria.setText("")
+        editTextEpisodioNumero.setText("")
     }
 
 }
