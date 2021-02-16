@@ -6,14 +6,13 @@ import com.example.seriados.database.EpisodiosDao
 import com.example.seriados.database.SeriesDao
 
 class EpisodiosViewModelFactory (
-    val episodiosDao: EpisodiosDao,
-    val seriesDao: SeriesDao
+    val episodiosDao: EpisodiosDao
     ) : ViewModelProvider.Factory
     {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(EpisodiosViewModel::class.java)) {
-                return EpisodiosViewModel(episodiosDao, seriesDao) as T
+                return EpisodiosViewModel(episodiosDao) as T
             }
             throw IllegalArgumentException("Classe ViewModel desconhecida.")
         }

@@ -9,11 +9,13 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="96dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -38,11 +40,18 @@
             android:inputType="textPersonName"
             android:textColorHint="#000000" />
 
+        <ListView
+            android:id="@+id/listViewEpisodios"
+            android:layout_width="match_parent"
+            android:layout_height="400dp">
+
+        </ListView>
+
         <Button
-            android:id="@+id/buttonAddEpi"
+            android:id="@+id/buttonAdicionarEpi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Alterar Episódios" />
+            android:text="Adicionar Episódios a lista" />
 
     </LinearLayout>
 
@@ -56,5 +65,21 @@
         android:src="@android:drawable/ic_menu_save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="#9C1111"
+        android:clickable="true"
+        android:outlineAmbientShadowColor="#FF0E0E"
+        android:outlineSpotShadowColor="#E30F0F"
+        android:src="@android:drawable/ic_menu_delete"
+        android:tint="#5E0606"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="#FF0606" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,9 +13,10 @@ import com.example.seriados.database.AppDatabase
 import com.example.seriados.database.EpisodiosUtil
 import com.example.seriados.database.SeriesUtil
 import com.example.seriados.model.Episodios
+import kotlinx.android.synthetic.main.fragment_alterar_epi.*
 import kotlinx.android.synthetic.main.fragment_edit.*
 
-class EditFragment : Fragment() {
+class AlterarEpiFragment : Fragment() {
 
     private lateinit var viewModel: EpisodiosViewModel
 
@@ -23,7 +24,7 @@ class EditFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_edit, container, false)
+        val view = inflater.inflate(R.layout.fragment_alterar_epi, container, false)
 
 
         val appDatabase =
@@ -57,16 +58,22 @@ class EditFragment : Fragment() {
         if (EpisodiosUtil.episodioSelecionado != null)
             preencherFormulario(EpisodiosUtil.episodioSelecionado!!)
 
-        buttonSalvarEpisodio.setOnClickListener {
+        buttonAlterarEpiSalvar.setOnClickListener {
 
-            var numero = editTextEpisodioNumero.text.toString()
-            var serieId = editTextidserie.text.toString().toLong()
-            viewModel.salvarEpisodios(numero, serieId)
+            var numero = editTextAlterarEpi.text.toString()
+            viewModel.alterarEpisodios(numero)
+        }
+        buttonExcluirEpi.setOnClickListener {
+
+            var episodioDeletado = EpisodiosUtil.episodioSelecionado
+            if (episodioDeletado != null) {
+                viewModel.deletarEpisodio(episodioDeletado)
+            }
         }
     }
 
     private fun preencherFormulario(episodios: Episodios){
-        editTextEpisodioNumero.setText(episodios.numero)
+        editTextAlterarEpi.setText(episodios.numero)
     }
 
     private fun limparFormulario() {

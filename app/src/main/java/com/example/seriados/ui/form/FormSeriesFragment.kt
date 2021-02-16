@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -12,6 +13,7 @@ import com.example.seriados.R
 import com.example.seriados.database.AppDatabase
 import com.example.seriados.database.EpisodiosUtil
 import com.example.seriados.database.SeriesUtil
+import com.example.seriados.model.Episodios
 import com.example.seriados.model.Series
 import kotlinx.android.synthetic.main.fragment_form_series.*
 import kotlinx.android.synthetic.main.fragment_series.*
@@ -31,7 +33,8 @@ class FormSeriesFragment : Fragment() {
             AppDatabase.getInstance(requireContext().applicationContext)              // DB
 
         val seriesDao = appDatabase.seriesDao()
-        val formSeriesViewModelFactory = FormSeriesViewModelFactory(seriesDao) //    // DB
+        val episodiosDao = appDatabase.episodiosDao()
+        val formSeriesViewModelFactory = FormSeriesViewModelFactory(seriesDao, episodiosDao) //    // DB
 
         viewModel = ViewModelProvider(
             this, formSeriesViewModelFactory
@@ -48,6 +51,20 @@ class FormSeriesFragment : Fragment() {
                     findNavController().popBackStack()
             }
         }
+        viewModel.episodios.observe(viewLifecycleOwner) {
+            listViewEpisodios.adapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_list_item_1,
+                it
+            )
+            listViewEpisodios.setOnItemClickListener { parent, view, position, id ->
+                val episodios = it.get(position)
+                EpisodiosUtil.episodioSelecionado = episodios
+                findNavController().navigate(R.id.alterarEpiFragment)
+            }
+        }
+        SeriesUtil.serieSelecionada?.id?.let { viewModel.atualizarListaEpisodios(it) }
+
 
         return view
     }
@@ -58,10 +75,12 @@ class FormSeriesFragment : Fragment() {
         if (SeriesUtil.serieSelecionada != null)
             preencherFormulario(SeriesUtil.serieSelecionada!!)
 
-
-        buttonAddEpi.setOnClickListener {
+        super.onActivityCreated(savedInstanceState)
+        buttonAdicionarEpi.setOnClickListener {
+            EpisodiosUtil.episodioSelecionado = null
             findNavController().navigate(R.id.editFragment)
         }
+
 
         fabSalvar.setOnClickListener {
 
@@ -70,6 +89,14 @@ class FormSeriesFragment : Fragment() {
             val categoria = editTextCategoria.text.toString()
 
             viewModel.salvarSeries(nome,categoria)
+        }
+
+        fabDelete.setOnClickListener {
+
+           var serieDeletada = SeriesUtil.serieSelecionada
+            if (serieDeletada != null) {
+                    viewModel.deletarSerie(serieDeletada)
+            }
         }
     }
 

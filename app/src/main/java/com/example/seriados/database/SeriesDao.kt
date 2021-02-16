@@ -12,7 +12,7 @@ interface SeriesDao {
 
     @Transaction
     @Query("SELECT * FROM Series WHERE id = :key")   // Read
-    suspend fun read(key: Long): SeriesEEpi
+    suspend fun read(key: Long): Series
 
     @Update
     suspend fun update(series: Series)        // id != null

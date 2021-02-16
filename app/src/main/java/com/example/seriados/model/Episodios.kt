@@ -6,8 +6,10 @@ import androidx.room.PrimaryKey
 
 @Entity
 class Episodios (
-    val numero : String? = null,
-    val seriesId: Long? = null,
+    var numero : String? = null,
+    var seriesId: Long? = null,
     @PrimaryKey(autoGenerate = true)
     var id:Long? =null
-    )
+    ){
+    override fun toString(): String = " $numero"
+}

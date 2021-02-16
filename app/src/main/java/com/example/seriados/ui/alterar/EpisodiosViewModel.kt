@@ -7,12 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.seriados.database.EpisodiosDao
 import com.example.seriados.database.EpisodiosUtil
 import com.example.seriados.database.SeriesDao
+import com.example.seriados.database.SeriesUtil
 import com.example.seriados.model.Episodios
+import com.example.seriados.model.Series
 import kotlinx.coroutines.launch
 
 class EpisodiosViewModel (
-    private val episodiosDao: EpisodiosDao,
-    private val seriesDao: SeriesDao
+    private val episodiosDao: EpisodiosDao
 ) : ViewModel() {
 
 
@@ -35,7 +36,7 @@ class EpisodiosViewModel (
         viewModelScope.launch {
             try {
 
-                val episodio = Episodios(numero)
+                var episodio = Episodios(numero,serieId)
 
                 if (EpisodiosUtil.episodioSelecionado != null) {
                     episodio.id = EpisodiosUtil.episodioSelecionado!!.id
@@ -47,6 +48,53 @@ class EpisodiosViewModel (
                 _msg.value = "Persistência realizada!"
             } catch (e: Exception) {
                 _msg.value = "Persistência falhou!"
+            }
+        }
+    }
+    fun alterarEpisodios(numero:String) {
+        _status.value = false
+        _msg.value = "Por favor, aguarde a persistência!"
+
+
+
+        viewModelScope.launch {
+            try {
+                var seriesId = EpisodiosUtil.episodioSelecionado?.seriesId
+                var episodio = Episodios(numero,seriesId)
+
+                if (EpisodiosUtil.episodioSelecionado != null) {
+                    episodio.id = EpisodiosUtil.episodioSelecionado!!.id
+                    episodiosDao.update(episodio)
+                } else
+                    episodiosDao.create(episodio)
+
+                _status.value = true
+                _msg.value = "Persistência realizada!"
+            } catch (e: Exception) {
+                _msg.value = "Persistência falhou!"
+            }
+        }
+    }
+
+    fun deletarEpisodio(episodio: Episodios) {
+        _status.value = false
+        _msg.value = "Por favor, aguarde a persistência!"
+
+
+
+        viewModelScope.launch {
+            try {
+
+                val episodios = episodio
+
+                if (EpisodiosUtil.episodioSelecionado != null) {
+                    episodiosDao.delete(episodios)
+                }
+
+                _status.value = true
+                _msg.value = "Deletada!"
+            } catch (e: Exception) {
+                _msg.value = "não deletada!"
             }
         }
     }

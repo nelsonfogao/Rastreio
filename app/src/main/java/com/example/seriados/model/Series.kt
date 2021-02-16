@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 class Series (
-    val nome: String? = null,
-    val categoria: String? = null,
+    var nome: String? = null,
+    var categoria: String? = null,
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null
 ){
