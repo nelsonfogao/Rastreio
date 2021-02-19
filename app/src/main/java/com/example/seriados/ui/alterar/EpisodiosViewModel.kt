@@ -6,10 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.seriados.database.EpisodiosDao
 import com.example.seriados.database.EpisodiosUtil
-import com.example.seriados.database.SeriesDao
-import com.example.seriados.database.SeriesUtil
 import com.example.seriados.model.Episodios
-import com.example.seriados.model.Series
 import kotlinx.coroutines.launch
 
 class EpisodiosViewModel (
@@ -36,7 +33,7 @@ class EpisodiosViewModel (
         viewModelScope.launch {
             try {
 
-                var episodio = Episodios(numero,serieId)
+                val episodio = Episodios(numero,serieId)
 
                 if (EpisodiosUtil.episodioSelecionado != null) {
                     episodio.id = EpisodiosUtil.episodioSelecionado!!.id
@@ -59,8 +56,8 @@ class EpisodiosViewModel (
 
         viewModelScope.launch {
             try {
-                var seriesId = EpisodiosUtil.episodioSelecionado?.seriesId
-                var episodio = Episodios(numero,seriesId)
+                val seriesId = EpisodiosUtil.episodioSelecionado?.seriesId
+                val episodio = Episodios(numero,seriesId)
 
                 if (EpisodiosUtil.episodioSelecionado != null) {
                     episodio.id = EpisodiosUtil.episodioSelecionado!!.id

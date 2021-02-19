@@ -20,6 +20,4 @@ interface EpisodiosDao {
     @Delete
     suspend fun delete(episodios: Episodios)
 
-    @Query("SELECT * FROM Episodios")
-    suspend fun all(): List<SeriesEEpi>
 }

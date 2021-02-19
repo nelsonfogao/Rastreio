@@ -2,7 +2,6 @@ package com.example.seriados.database
 
 import androidx.room.*
 import com.example.seriados.model.Series
-import com.example.seriados.model.SeriesEEpi
 
 @Dao
 interface SeriesDao {

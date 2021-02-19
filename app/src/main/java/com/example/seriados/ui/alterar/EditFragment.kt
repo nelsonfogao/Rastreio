@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.seriados.R
 import com.example.seriados.database.AppDatabase
 import com.example.seriados.database.EpisodiosUtil
-import com.example.seriados.database.SeriesUtil
 import com.example.seriados.model.Episodios
 import kotlinx.android.synthetic.main.fragment_edit.*
 
@@ -59,8 +58,8 @@ class EditFragment : Fragment() {
 
         buttonSalvarEpisodio.setOnClickListener {
 
-            var numero = editTextEpisodioNumero.text.toString()
-            var serieId = editTextidserie.text.toString().toLong()
+            val numero = editTextEpisodioNumero.text.toString()
+            val serieId = editTextidserie.text.toString().toLong()
             viewModel.salvarEpisodios(numero, serieId)
         }
     }
@@ -69,8 +68,5 @@ class EditFragment : Fragment() {
         editTextEpisodioNumero.setText(episodios.numero)
     }
 
-    private fun limparFormulario() {
-        editTextEpisodioNumero.setText("")
-    }
 
 }

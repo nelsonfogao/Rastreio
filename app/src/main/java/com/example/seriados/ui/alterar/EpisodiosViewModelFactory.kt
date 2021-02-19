@@ -3,7 +3,6 @@ package com.example.seriados.ui.alterar
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.seriados.database.EpisodiosDao
-import com.example.seriados.database.SeriesDao
 
 class EpisodiosViewModelFactory (
     val episodiosDao: EpisodiosDao

@@ -60,12 +60,12 @@ class AlterarEpiFragment : Fragment() {
 
         buttonAlterarEpiSalvar.setOnClickListener {
 
-            var numero = editTextAlterarEpi.text.toString()
+            val numero = editTextAlterarEpi.text.toString()
             viewModel.alterarEpisodios(numero)
         }
         buttonExcluirEpi.setOnClickListener {
 
-            var episodioDeletado = EpisodiosUtil.episodioSelecionado
+            val episodioDeletado = EpisodiosUtil.episodioSelecionado
             if (episodioDeletado != null) {
                 viewModel.deletarEpisodio(episodioDeletado)
             }
@@ -76,8 +76,5 @@ class AlterarEpiFragment : Fragment() {
         editTextAlterarEpi.setText(episodios.numero)
     }
 
-    private fun limparFormulario() {
-        editTextEpisodioNumero.setText("")
-    }
 
 }

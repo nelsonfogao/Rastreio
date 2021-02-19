@@ -13,10 +13,8 @@ import com.example.seriados.R
 import com.example.seriados.database.AppDatabase
 import com.example.seriados.database.EpisodiosUtil
 import com.example.seriados.database.SeriesUtil
-import com.example.seriados.model.Episodios
 import com.example.seriados.model.Series
 import kotlinx.android.synthetic.main.fragment_form_series.*
-import kotlinx.android.synthetic.main.fragment_series.*
 
 class FormSeriesFragment : Fragment() {
 
@@ -93,7 +91,7 @@ class FormSeriesFragment : Fragment() {
 
         fabDelete.setOnClickListener {
 
-           var serieDeletada = SeriesUtil.serieSelecionada
+           val serieDeletada = SeriesUtil.serieSelecionada
             if (serieDeletada != null) {
                     viewModel.deletarSerie(serieDeletada)
             }
@@ -105,9 +103,5 @@ class FormSeriesFragment : Fragment() {
         editTextCategoria.setText(series.categoria)
     }
 
-    private fun limparFormulario() {
-        editTextNome.setText("")
-        editTextCategoria.setText("")
-    }
 
 }
