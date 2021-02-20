@@ -1,0 +1,8 @@
+package com.example.rastreio
+
+import androidx.lifecycle.ViewModel
+
+class MainViewModel () : ViewModel() {
+
+
+}
